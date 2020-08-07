@@ -20,16 +20,16 @@ function tabMaker(object){
 
     tab.classList.add('tab')
 
+    tab.textContent = ` ${object}/` 
+
     return tab
 }
 
 
 Axios.get('https://lambda-times-api.herokuapp.com/topics')
-    .then(response =>{
-        const topics = tabMaker(response.data)
-        tab.appendChild(topics)
-        topics.forEach(obj => {
-            tab.textContent = topics[obj]
+    .then(response =>{ console.log(response)
+        const topics = tabMaker(response.data['topics'])
+        response.data['topics'].forEach(obj => {
             const theTab = tabMaker(obj)
             tabs.appendChild(theTab)
             debugger

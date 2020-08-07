@@ -43,33 +43,47 @@ function cardMaker(object){
     const authorName = document.createElement('span')
 
     card.classList.add('card')
-    healine.classList.add('headline')
+    headline.classList.add('headline')
     author.classList.add('author')
     imgContainer.classList.add('img-container')
 
+    card.appendChild(headline)
+    card.appendChild(author)
+    author.appendChild(imgContainer)
+    imgContainer.appendChild(img)
+    author.appendChild(authorName)
+
     headline.textContent = object.headline
     img.src = object.authorPhoto
-    authorName = object.authorName
+    authorName.textContent = object.authorName
 
     card.addEventListener('click', event => {
         console.log(headline)
     })
 
     return card
-
 }
 
 
 
+
+
 Axios.get('https://lambda-times-api.herokuapp.com/articles')
-    .then(response => {
-        const arrayOfArticles = Array.from(response.data)
-        arrayOfArticles.forEach(article => {
-        const theCard = cardMaker(article)
-        cards.appendChild(theCard)
+    .then(response => { console.log(response.data)
+        const topics = Object.values(response.data.articles)
+        topics.forEach(article => {
+            article.forEach(object => { 
+                const theCard = cardMaker(object)
+                cards.appendChild(theCard)
+            
+
+        })
+        
     })
 })
 
     .catch(error =>{
         debugger
     })
+
+   
